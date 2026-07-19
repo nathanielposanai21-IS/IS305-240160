@@ -16,7 +16,7 @@ async function main() {
         const studentId = await rl.question('Enter your Student ID: ');
         const studentName = await rl.question('Enter your Name: ');
         const mealDate = await rl.question('Enter the Meal Date (YYYY-MM-DD): ');
-        const mealTime = await rl.question('Enter the Meal Time (Breakfast/Lunch/Dinner): ');
+        const mealType = await rl.question('Enter the Meal Time (Breakfast/Lunch/Dinner): ');
         const quantity = await rl.question('Enter the Quantity of Meals: ');
         const dietaryNotes = await rl.question('Enter any Dietary Notes (if any): ');
 
@@ -28,7 +28,7 @@ async function main() {
         console.log(`Student ID: ${booking.studentId}`);
         console.log(`Name: ${booking.studentName}`);
         console.log(`Meal Date: ${booking.mealDate}`);
-        console.log(`Meal Time: ${booking.mealTime}`);
+        console.log(`Meal Type: ${booking.mealType}`);
         console.log(`Quantity: ${booking.quantity}`);
         console.log(`Dietary Notes: ${booking.dietaryNotes}`);
 

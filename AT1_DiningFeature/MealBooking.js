@@ -4,121 +4,126 @@ class MealBooking {
         this.studentName = studentName;
         this.mealDate = mealDate;
         this.mealType = mealType;
-        this.quantity = quantity;
+        this.quantity = Number(quantity);
         this.dietaryNote = dietaryNote;
-
-        this.bookingStatus = 'Pending'; // Default status
+        this.bookingStatus = "Pending";
 
         this.mealPrices = {
-            'Breakfast': 10,
-            'Lunch': 15,
-            'Dinner': 20
+            Breakfast: 10,
+            Lunch: 15,
+            Dinner: 20
         };
     }
 
-    // Appropriate getters for each property
-    getstudentID() {
+    // Getters
+    getStudentID() {
         return this.studentID;
     }
 
-    getstudentName() {
+    getStudentName() {
         return this.studentName;
     }
 
-    getmealDate() {
+    getMealDate() {
         return this.mealDate;
     }
 
-    getmealType() {
+    getMealType() {
         return this.mealType;
     }
 
-    getquantity() {
+    getQuantity() {
         return this.quantity;
     }
 
-    getdietaryNote() {
+    getDietaryNote() {
         return this.dietaryNote;
     }
 
-    getbookingStatus() {
+    getBookingStatus() {
         return this.bookingStatus;
     }
 
-    // Appropriate setters for each property
-    setstudentID(studentID) {
-        if (!/^\d+$/.test(studentID)) {
-            throw new Error('Invalid student ID. It should be a numeric value.');
-        }
+    // Setters
+    setStudentID(studentID) {
         this.studentID = studentID;
     }
 
-    setstudentName(studentName) {
-        if (!/^[a-zA-Z\s]+$/.test(studentName)) {
-            throw new Error('Invalid student name. It should only contain letters and spaces.');
-        }
+    setStudentName(studentName) {
         this.studentName = studentName;
     }
 
-    setmealDate(mealDate) {
-        if (!mealDate || mealDate.trim() == "") {
-            throw new Error("Meal date is required")
-        }
+    setMealDate(mealDate) {
         this.mealDate = mealDate;
     }
 
-    setmealType(mealType) {
-        const validMealTypes = ['Breakfast', 'Lunch', 'Dinner'];
-        if (!validMealTypes.includes(mealType)) {
-            throw new Error(`Invalid meal type. It should be one of: ${validMealTypes.join(', ')}`);
-        }
+    setMealType(mealType) {
         this.mealType = mealType;
     }
 
-    setquantity(quantity) {
-        if (!Number.isInteger(quantity) || quantity <= 0) {
-            throw new Error('Invalid quantity. It should be a positive integer.');
+    setQuantity(quantity) {
+        this.quantity = Number(quantity);
+    }
+
+    setDietaryNote(note) {
+        this.dietaryNote = note;
+    }
+
+    validate() {
+
+        if (!this.studentID.trim()) {
+            throw new Error("Student ID is required.");
         }
-        this.quantity = quantity;
-    }
 
-    setdietaryNote(dietaryNote) {
-        this.dietaryNote = dietaryNote;
-    }
-
-    setbookingStatus(bookingStatus) {
-        const validStatuses = ['Pending', 'Confirmed', 'Cancelled'];
-        if (!validStatuses.includes(bookingStatus)) {
-            throw new Error(`Invalid booking status. It should be one of: ${validStatuses.join(', ')}`);
+        if (!this.studentName.trim()) {
+            throw new Error("Student Name is required.");
         }
-        this.bookingStatus = bookingStatus;
+
+        if (!this.mealDate.trim()) {
+            throw new Error("Meal Date is required.");
+        }
+
+        const validMeals = ["Breakfast", "Lunch", "Dinner"];
+
+        if (!validMeals.includes(this.mealType)) {
+            throw new Error("Meal Type must be Breakfast, Lunch or Dinner.");
+        }
+
+        if (isNaN(this.quantity) || this.quantity < 1) {
+            throw new Error("Quantity must be at least 1.");
+        }
+
+        return true;
     }
 
-    // Method to calculate total cost based on meal type and quantity
-    calculateTotalCost() {
-        const pricePerMeal = this.mealPrices[this.mealType];
-        return pricePerMeal * this.quantity;
+    calculateTotal() {
+        return this.mealPrices[this.mealType] * this.quantity;
     }
 
-    // Method to update the booking details
-    updateBookingDetails(mealDate, mealType, quantity, dietaryNote) {
-        this.setmealDate(mealDate);
-        this.setmealType(mealType);
-        this.setquantity(quantity);
-        this.dietaryNote = dietaryNote;
+    confirmBooking() {
+        this.bookingStatus = "Confirmed";
     }
 
-    getBookingSummary() {
-        return ` Booking Summary:
-Student ID: ${this.studentID}
-Student Name: ${this.studentName}
+    cancelBooking() {
+        this.bookingStatus = "Cancelled";
+    }
+
+    getSummary() {
+
+        return `
+========================================
+          BOOKING CREATED
+========================================
+Student: ${this.studentName} (${this.studentID})
 Meal Date: ${this.mealDate}
 Meal Type: ${this.mealType}
 Quantity: ${this.quantity}
-Dietary Note: ${this.dietaryNote || 'None'}
-Booking Status: ${this.bookingStatus}
-Total Cost: $${this.calculateTotalCost()}`;
+Dietary Note: ${this.dietaryNote || "None"}
+Status: ${this.bookingStatus}
+Total Cost: K${this.calculateTotal().toFixed(2)}
+========================================
+`;
     }
 }
 
-GPUShaderModule.exports = MealBooking;
+module.exports = MealBooking;
