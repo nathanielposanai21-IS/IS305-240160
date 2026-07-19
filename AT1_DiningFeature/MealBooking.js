@@ -15,4 +15,33 @@ class MealBooking {
             'Dinner': 20
         };
     }
+
+    // Appropriate getters for each property
+    getstudentID() {
+        return this.studentID;
+    }
+
+    getstudentName() {
+        return this.studentName;
+    }
+
+    getmealDate() {
+        return this.mealDate;
+    }
+
+    getmealType() {
+        return this.mealType;
+    }
+
+    getquantity() {
+        return this.quantity;
+    }
+
+    getdietaryNote() {
+        return this.dietaryNote;
+    }
+
+    getbookingStatus() {
+        return this.bookingStatus;
+    }
 }
